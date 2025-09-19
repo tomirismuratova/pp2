@@ -28,18 +28,10 @@ git config --global user.email "your_email@whatever.com"
  main в качестве имени ветки по умолчанию.
 git config --global init.defaultBranch main
 
-git config --global core.autocrlf input
-git config --global core.safecrlf warn
 
-
-mkdir work
-cd work
-touch hello.html
-Чтобы создать Git-репозиторий из этой директории, выполните команду git init.
-git init
-
-git add hello.html
-git commit -m "Initial Commit"
+git add .
+git commit -m "some message"
+git push
 
 Используйте команду git status, чтобы проверить текущее состояние репозитория.
 git status
@@ -53,14 +45,13 @@ git log --pretty=oneline
 %ad — дата коммита.
 | — просто визуальный разделитель.
 %s — комментарий.
-%d — дополнения коммита («головы» веток или теги).
 %an — имя автора.
 --date=short — сохраняет формат даты коротким и симпатичным.
 git log --pretty=format:"%h %ad | %s%d [%an]" --date=short
 
 git status → Shows what changed in your project.
 
-git add → Selects the files you want to save. (you can write "git add ." to add all changes/added files, so u can not write git add to each file separately)
+git add → Selects the files you want to save. 
 
 git commit → Saves the selected files with a message. git commit -m "message"
 
