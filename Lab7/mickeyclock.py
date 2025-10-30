@@ -3,14 +3,12 @@ import time
 import math
 pygame.init()
 
-# параметры появляющегося окна
+# параметры окна
 screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 
-# название в верхней части окна
 pygame.display.set_caption("Mickey's clock")
 
-# внесение картинок в окно
 left = pygame.image.load("Lab7/left_hand.png")
 right = pygame.image.load("Lab7/right_hand.png")
 face = pygame.transform.scale(pygame.image.load("Lab7/mickey_face.png"), (800, 600))
@@ -26,12 +24,10 @@ while not done:
     minute = current_time.tm_min
     second = current_time.tm_sec
     
-    # определяем градусы минут и секунд
-    # текущая минута * 360 градусов / 60 минут + текущая секунда 
-    minute_angle = minute * 6    + (second / 60) * 6   
+    minute_angle = minute * 6 + (second / 60) * 6   
     second_angle = second * 6  
     
-    # добавляем фон на экран
+    # добавляем фон 
     screen.blit(face, (0,0))
     
     # правая рука - стрелка минут
@@ -44,7 +40,7 @@ while not done:
     leftarmrect = rotated_leftarm.get_rect(center=(800 // 2, 600 // 2 + 10))
     screen.blit(rotated_leftarm, leftarmrect)
     
-    pygame.display.flip() # обновляет окно
-    clock.tick(60) # FPS
+    pygame.display.flip() 
+    clock.tick(60) # FPS(частота кадров)
     
 pygame.quit()
