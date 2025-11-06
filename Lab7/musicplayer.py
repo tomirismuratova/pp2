@@ -13,7 +13,7 @@ for song in allmusic:
 
 screen = pygame.display.set_mode((800, 800))
 pygame.display.set_caption("Playlist")
-clock = pygame.time.Clock() # нужен чтобы постоянно обновлять экран
+clock = pygame.time.Clock() # нужен чтобы постоянно обновлять экранп
 
 background = pygame.image.load(os.path.join("Lab7", "background1.png"))
 background = pygame.transform.scale(background, (800, 800))
@@ -46,7 +46,7 @@ while run:
             pygame.quit()
             exit()
         elif event.type == pygame.KEYDOWN:  # при нажатии клавиши
-            if event.key == pygame.K_SPACE:  # нажат пробел
+            if event.key == pygame.K_SPACE:  
                 if aplay:
                     aplay = False
                     pygame.mixer.music.pause()

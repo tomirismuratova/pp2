@@ -1,6 +1,5 @@
 import pygame 
 import time
-import math
 pygame.init()
 
 # параметры окна
@@ -34,7 +33,7 @@ while not done:
     rotated_rightarm = pygame.transform.rotate(pygame.transform.scale(right, (800, 600)), -minute_angle)
     rightarmrect = rotated_rightarm.get_rect(center=(800 // 2, 600 // 2 + 12))
     screen.blit(rotated_rightarm, rightarmrect)
-    
+
     # левая рука - стрелка секунд
     rotated_leftarm = pygame.transform.rotate(pygame.transform.scale(left, (40.95, 682.5)), -second_angle)
     leftarmrect = rotated_leftarm.get_rect(center=(800 // 2, 600 // 2 + 10))

@@ -25,13 +25,13 @@ while True:
     if keys[pygame.K_DOWN]:
         ball_pos[1] = min(ball_pos[1] + speed, window_size[1] - ball_radius)  
     if keys[pygame.K_LEFT]:
-        ball_pos[0] = max(ball_pos[0] - speed, ball_radius)  
+        ball_pos[0] -= speed
+        if ball_pos[0] < -ball_radius:
+            ball_pos[0] = window_size[0] + ball_radius
     if keys[pygame.K_RIGHT]:
         ball_pos[0] = min(ball_pos[0] + speed, window_size[0] - ball_radius) 
-    #ball_pos[1] это вертикальная координата шара(Y). чем меньше Y тем выше на экране 
-    #ball_pos[0]это горизонтальная координата шараX). чтобы идти влево уменьшаем X.
     
-    screen.fill(bg_color)  # очистка экрана, чтобы не оставались следы
-    pygame.draw.circle(screen, ball_color, ball_pos, ball_radius)  # рисовка шара
+    screen.fill(bg_color)  
+    pygame.draw.circle(screen, ball_color, ball_pos, ball_radius) 
     pygame.display.flip()  
     pygame.time.Clock().tick(24)  
