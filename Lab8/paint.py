@@ -18,10 +18,10 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))  # создаем экран
 pygame.display.set_caption("Drawing Tool")  # заголовок окна
 screen.fill(WHITE)  # заполняем экран белым цветом
 
-current_color = BLACK  # начальный цвет
+current = BLACK  # начальный цвет
 drawing = False  
 mode = "pen"  # начальный режим 
-start_pos = None  # начальная позиция
+starting = None  # начальная позиция
 points = []  
 
 buttons = []
@@ -33,10 +33,10 @@ def draw():
         pygame.draw.rect(screen, COLORS[i], button)  # рисуем кнопки
         if COLORS[i] == WHITE:  
             pygame.draw.rect(screen, BLACK, button, 2)
-        if COLORS[i] == current_color:  # если это выбранный цвет, рисуем рамку
+        if COLORS[i] == current:  # если это выбранный цвет, рисуем рамку
             pygame.draw.rect(screen, WHITE, button, 3)
 
-def get_color(pos):
+def color(pos):
     for i, button in enumerate(buttons):
         if button.collidepoint(pos):  #была ли нажата кнопка
             return COLORS[i]  # возвращаем выбранный цвет
@@ -67,33 +67,33 @@ while running:
             running = False  # закрытие окна
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:  # если нажата левая кнопка мыши
-                new_color = get_color(event.pos)  # получаем выбранный цвет
+                new_color = color(event.pos)  # получаем выбранный цвет
                 if new_color is not None:
-                    current_color = new_color  # меняем текущий цвет
+                    current = new_color  # меняем текущий цвет
                     mode = "eraser" if new_color == WHITE else "pen"  # если выбрали ластик, меняем режим
                 else:
                     drawing = True 
-                    start_pos = event.pos  # сохраняем начальную точку
-                    points = [start_pos]  # добавляем первую точку
+                    starting = event.pos  # сохраняем начальную точку
+                    points = [starting]  # добавляем первую точку
         elif event.type == pygame.MOUSEBUTTONUP:
-            if mode in ["rectangle", "circle"] and start_pos:
+            if mode in ["rectangle", "circle"] and starting:
                 end_pos = event.pos
                 if mode == "rectangle":
-                    x = min(start_pos[0], end_pos[0])
-                    y = min(start_pos[1], end_pos[1])
-                    width = abs(start_pos[0] - end_pos[0])
-                    height = abs(start_pos[1] - end_pos[1])
-                    pygame.draw.rect(screen, current_color, (x, y, width, height), 2)
+                    x = min(starting[0], end_pos[0])
+                    y = min(starting[1], end_pos[1])
+                    width = abs(starting[0] - end_pos[0])
+                    height = abs(starting[1] - end_pos[1])
+                    pygame.draw.rect(screen, current, (x, y, width, height), 2)
                 elif mode == "circle":
-                    radius = int(((end_pos[0] - start_pos[0]) ** 2 + (end_pos[1] - start_pos[1]) ** 2) ** 0.5)
-                    pygame.draw.circle(screen, current_color, start_pos, radius, 2)
+                    radius = int(((end_pos[0] - starting[0]) ** 2 + (end_pos[1] - starting[1]) ** 2) ** 0.5)
+                    pygame.draw.circle(screen, current, starting, radius, 2)
             drawing = False 
 
             points = []  
         elif event.type == pygame.MOUSEMOTION:
             if drawing and mode == "pen":
                 points.append(event.pos)  
-                smoothline(screen, points, 5, current_color)  # рисуем плавную линию
+                smoothline(screen, points, 5, current)  # рисуем плавную линию
                 points = points[-2:]
             elif drawing and mode == "eraser":
                 pygame.draw.circle(screen, WHITE, event.pos, 10)  # рисуем ластик
