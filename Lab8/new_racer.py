@@ -152,7 +152,7 @@ while True:
             sys.exit()
 
     if pygame.sprite.spritecollideany(P1, enemies):
-        continue_game = handle_crash()
+        continue_game = game_over_screen()
         if not continue_game:
             pygame.quit()
             sys.exit()
