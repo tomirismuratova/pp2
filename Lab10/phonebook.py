@@ -66,7 +66,7 @@ def delete_contact():
 
 # menu loop
 while True:
-    print("\n--- PhoneBook Menu ---")
+    print("\n PhoneBook Menu ")
     print("1. Add contact (console)")
     print("2. Add contacts from CSV")
     print("3. Update contact")
