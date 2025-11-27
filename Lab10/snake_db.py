@@ -39,11 +39,19 @@ def get_user():
 
 
 # save score function
-def save_score(user_id, score):
-    cur.execute("INSERT INTO user_score (user_id, score) VALUES (%s,%s)", (user_id, score))
-    cur.execute("UPDATE users SET highest_score = GREATEST(highest_score, %s) WHERE id=%s", (score, user_id))
+def save_score(user_id, score, level):
+    # сохраняем каждый новый результат в user_score (без level)
+    cur.execute("INSERT INTO user_score (user_id, score) VALUES (%s, %s)", (user_id, score))
+    
+    # обновляем таблицу users с новым highscore и уровнем
+    cur.execute("""
+        UPDATE users 
+        SET highest_score = GREATEST(highest_score, %s), level = %s
+        WHERE id = %s
+    """, (score, level, user_id))
+    
     conn.commit()
-    print("Game saved!")
+
 
 # start of snake code(from Lab9)
 pygame.init()
@@ -179,7 +187,7 @@ while running:
 
 pygame.quit()
 # save score on exit
-save_score(user_id, score)
+save_score(user_id, score, level)
 
 cur.close()
 conn.close()
