@@ -20,7 +20,11 @@ def add_contact_console():
     fn = input("First name: ")
     ln = input("Last name: ")
     ph = input("Phone: ")
-    cur.execute("INSERT INTO phonebook (first_name, last_name, phone) VALUES (%s,%s,%s) ON CONFLICT (phone) DO NOTHING", (fn, ln, ph))
+    cur.execute("SELECT * FROM phonebook WHERE first_name=%s", (fn,))
+    if len(cur.fetchall()) > 0:
+        cur.execute("UPDATE phonebook SET phone=%s WHERE first_name=%s", ph, fn)
+    else:
+        cur.execute("INSERT INTO phonebook (first_name, last_name, phone) VALUES (%s,%s,%s) ON CONFLICT (phone) DO NOTHING", (fn, ln, ph))
     conn.commit()
     print("Added.")
 
